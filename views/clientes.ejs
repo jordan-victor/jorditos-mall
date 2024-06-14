@@ -1,0 +1,41 @@
+<%- include('layouts/header') %>
+<body>
+    <%- include('layouts/navbar') %>
+    <hr>
+    <h2>Clientes</h2>
+    <form action="/pesquisar" method="POST">
+        <input type="text" name="id" placeholder="Pesquisar">
+    </form>
+
+    <nav style="display: flex;">
+        <p>Filtrar</p>
+        <div>
+            <ul>
+                <li><a href="/clientes/f">Feminino</a></li>
+                <li><a href="/clientes/m">Maculino</a></li>
+                <li><a href="/clientes/todos">Todos</a></li>
+            </ul>
+
+            <form action="/search" method="POST">
+                <input type="number" class="form-control" placeholder="Pesquisar" name="cliente">
+            </form>
+        </div>
+       
+        <br>
+        
+    </nav>
+
+    <main>
+        <% clientes.forEach(cliente=>{ %>
+            <p>ID do cliente: <strong><%= cliente.id %></strong></p>
+            <p>Nome: <%= cliente.nome %></p>
+            <p>CPF: <%= cliente.cpf %></p>
+            <p>Email: <%= cliente.email %></p>
+            <p>Localização: <%= cliente.localizacao %></p>
+            <P>Sexo: <%= cliente.sexo %></P>
+            <p>Número compra: <%= cliente.ncompra %></p>
+            <hr>
+        <% }) %>
+    </main>
+</body>
+<%- include('layouts/footer') %>

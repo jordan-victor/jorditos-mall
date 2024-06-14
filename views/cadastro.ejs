@@ -1,0 +1,29 @@
+<%- include('layouts/header') %>
+<body>
+    <%- include('layouts/navbar') %>
+    <hr>
+    
+
+    <main>
+        <form action="/cadastrar" method="POST">
+            <div>
+                <p><strong>CADASTRO DO CLIENTE</strong></p>
+
+                <input type="text" name="nome" id="nome" placeholder="Nome" required>
+                <input type="number" name="cpf" id="cpf" placeholder="CPF" required>
+                <input type="email" name="email" id="email" placeholder="Email" required>
+                <input type="text" name="localizacao" id="localizacao" placeholder="Localização" required>
+
+                <select name="sexo" id="sexo">
+                    <option value="M">Masculino</option>
+                    <option value="F">Feminino</option>
+                </select>
+
+                <input type="number" name="ncompra" id="ncompra" placeholder="Número compra" required>
+                <button type="submit">CADASTRAR</button>
+            </div>   
+        </form>
+        
+    </main>
+</body>
+<%- include('layouts/footer') %>

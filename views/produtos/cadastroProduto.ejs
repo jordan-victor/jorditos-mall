@@ -1,0 +1,61 @@
+<%- include('../layouts/header') %>
+<%- include('../layouts/navbar') %>
+<body>
+    <main>
+        <section>
+            <form action="/cadastrarProd" method="POST">
+                <div>
+                    <p><strong>CADASTRO DO PRODUTO</strong></p>
+
+                    <input type="text" name="nomeProd" id="nome" placeholder="Nome" required>
+                    <input type="number" name="preco" id="preco" placeholder="Preço" step="0.01" required>
+                    <input type="text" name="fornecedor" id="fornecedor" placeholder="Fornecedor" required>
+                    <input type="number" name="quantidade" id="quantidade" placeholder="Quantidade" required>
+
+                    <select name="categoria" id="catedoria">
+                        <option>Categoria</option>
+                        <option value="Varejo">Varejo</option>
+                        <option value="Informática">Informática</option>
+                        <option value="Eletrodoméstico">Eletrodoméstico</option>
+                        <option value="Alimentos">Alimentos</option>
+                        <option value="Móveis">Móveis</option>
+                        <option value="Game">Game</option>
+                    </select>
+
+                    <textarea name="descricao" id="descricao" placeholder="Descrição"></textarea>
+                    <button type="submit">CADASTRAR</button>
+                </div>   
+            </form>
+        </section>
+
+
+
+
+        <section>
+            <div id="listaProd">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>PRODUTO</th><th>PREÇO</th><th>QUANTIDADE</th><th>FORNEÇEDOR</th><th>CATEGORIA</th><th>DESCRIÇÃO</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <% produtos.forEach(produto=>{ %>
+                            <tr>
+                                <td><%=produto.nomeProd%></td>
+                                <td><%=produto.preco%></td>
+                                <td><%=produto.quantidade%></td>
+                                <td><%=produto.fornecedor%></td>
+                                <td><%=produto.categoria%></td>
+                                <td><%=produto.descricao%></td>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+                
+            </div>
+        </section>
+    </main>
+</body>
+<%- include('../layouts/footer') %>
