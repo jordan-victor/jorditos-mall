@@ -1,61 +1,104 @@
-<%- include('../layouts/header') %>
-<%- include('../layouts/navbar') %>
-<body>
-    <main>
-        <section>
-            <form action="/cadastrarProd" method="POST">
-                <div>
-                    <p><strong>CADASTRO DO PRODUTO</strong></p>
+<body id="produtos">
+    <%- include('../layouts/header') %>
+    <%- include('../layouts/navbar') %>
+    <div class="container">
+        <h2>Produtos</h2>
+        <div style="display: flex; gap: 10px;">
+            <p id="cadastro" onclick="showCadastro()">Cadastro</p>
+            <p id="lista"  onclick="showLista()">Lista</p>
+        </div>
+    
+        <main>
+            <section id="cadastro">
+                <form action="/cadastrarProd" method="POST" id="formCadProd">
+                    <div>
+                        <p><strong>CADASTRO DO PRODUTO</strong></p>
 
-                    <input type="text" name="nomeProd" id="nome" placeholder="Nome" required>
-                    <input type="number" name="preco" id="preco" placeholder="Preço" step="0.01" required>
-                    <input type="text" name="fornecedor" id="fornecedor" placeholder="Fornecedor" required>
-                    <input type="number" name="quantidade" id="quantidade" placeholder="Quantidade" required>
+                        <input type="text" name="nomeProd" id="nome" placeholder="Nome" required>
+                        <input type="number" name="preco" id="preco" placeholder="Preço" step="0.01" required>
+                        <input type="text" name="fornecedor" id="fornecedor" placeholder="Fornecedor" required>
+                        <input type="number" name="quantidade" id="quantidade" placeholder="Quantidade" required>
 
-                    <select name="categoria" id="catedoria">
-                        <option>Categoria</option>
-                        <option value="Varejo">Varejo</option>
-                        <option value="Informática">Informática</option>
-                        <option value="Eletrodoméstico">Eletrodoméstico</option>
-                        <option value="Alimentos">Alimentos</option>
-                        <option value="Móveis">Móveis</option>
-                        <option value="Game">Game</option>
-                    </select>
+                        <select name="categoria" id="catedoria">
+                            <option>Categoria</option>
+                            <option value="Varejo">Varejo</option>
+                            <option value="Informática">Informática</option>
+                            <option value="Eletrodoméstico">Eletrodoméstico</option>
+                            <option value="Alimentos">Alimentos</option>
+                            <option value="Móveis">Móveis</option>
+                            <option value="Game">Game</option>
+                        </select>
 
-                    <textarea name="descricao" id="descricao" placeholder="Descrição"></textarea>
-                    <button type="submit">CADASTRAR</button>
-                </div>   
-            </form>
-        </section>
-
-
+                        <textarea name="descricao" id="descricao" placeholder="Descrição"></textarea>
+                        <button type="submit">CADASTRAR</button>
+                    </div>   
+                </form>
+            </section>
 
 
-        <section>
-            <div id="listaProd">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>PRODUTO</th><th>PREÇO</th><th>QUANTIDADE</th><th>FORNEÇEDOR</th><th>CATEGORIA</th><th>DESCRIÇÃO</th>
-                        </tr>
-                    </thead>
 
-                    <tbody>
-                        <% produtos.forEach(produto=>{ %>
+
+            
+            <section id="lista">
+                <div id="formsProd">
+                    <form method="POST" action="/filtroProd" id="formProd">
+                        <select name="categoria" id="filtro"  onchange="filtrar(this.value)">
+                            <option>Categoria</option>
+                            <option value="todos">Todos</option>
+                            <option value="Varejo">Varejo</option>
+                            <option value="Informática">Informática</option>
+                            <option value="Eletrodoméstico">Eletrodoméstico</option>
+                            <option value="Alimentos">Alimentos</option>
+                            <option value="Móveis">Móveis</option>
+                            <option value="Game">Game</option>
+                        </select>  
+                    </form>
+
+                    <form action="/pesquisarProd" method="POST">
+                        <input type="number" name="pesquisado" placeholder="Pesquisar">
+                        <button type="submit">Pesquisar</button> 
+                    </form>
+                </div>
+
+                <div id="listaProd">
+                    <table>
+                        <thead>
                             <tr>
-                                <td><%=produto.nomeProd%></td>
-                                <td><%=produto.preco%></td>
-                                <td><%=produto.quantidade%></td>
-                                <td><%=produto.fornecedor%></td>
-                                <td><%=produto.categoria%></td>
-                                <td><%=produto.descricao%></td>
+                                <th>ID</th><th>PRODUTO</th><th>PREÇO</th><th>QUANTIDADE</th><th>FORNECEDOR</th><th>CATEGORIA</th><th>DESCRIÇÃO</th><th>AÇÃO</th>
                             </tr>
-                        <% }) %>
-                    </tbody>
-                </table>
-                
-            </div>
-        </section>
-    </main>
+                        </thead>
+
+                        <tbody>
+                            <% produtos.forEach(produto=>{ %>
+                                <tr>
+                                    <td><%=produto.id%></td>
+                                    <td><%=produto.nomeProd%></td>
+                                    <td><%=produto.preco%></td>
+                                    <td><%=produto.quantidade%></td>
+                                    <td><%=produto.fornecedor%></td>
+                                    <td><%=produto.categoria%></td>
+                                    <td><%=produto.descricao%></td>
+                                    <td style="display: flex;gap: 5px; border: none;">
+                                        <a href="/editarProd/<%= produto.id %>"><button class="btnEditar">Editar</button></a>
+                                        <a href="/deletarProd/<%= produto.id %>"><button class="btnApagar">Apagar</button></a>
+                                    </td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
 </body>
+
+
+
+
+<script>
+    function filtrar(value){
+        let formProd = document.getElementById("formProd")
+        formProd.submit()
+    }
+</script>
 <%- include('../layouts/footer') %>
