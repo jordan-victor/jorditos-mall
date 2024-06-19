@@ -19,17 +19,18 @@
                         <input type="text" name="fornecedor" id="fornecedor" placeholder="Fornecedor" required>
                         <input type="number" name="quantidade" id="quantidade" placeholder="Quantidade" required>
 
-                        <select name="categoria" id="catedoria">
+                        <select name="categoria" id="catedoria" required>
                             <option>Categoria</option>
                             <option value="Varejo">Varejo</option>
                             <option value="Informática">Informática</option>
                             <option value="Eletrodoméstico">Eletrodoméstico</option>
                             <option value="Alimentos">Alimentos</option>
                             <option value="Móveis">Móveis</option>
+                            <option value="Eletrônico">Eletrônico</option>
                             <option value="Game">Game</option>
                         </select>
 
-                        <textarea name="descricao" id="descricao" placeholder="Descrição"></textarea>
+                        <textarea name="descricao" id="descricao" placeholder="Descrição" required></textarea>
                         <button type="submit">CADASTRAR</button>
                     </div>   
                 </form>
@@ -59,46 +60,74 @@
                         <button type="submit">Pesquisar</button> 
                     </form>
                 </div>
-
-                <div id="listaProd">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>ID</th><th>PRODUTO</th><th>PREÇO</th><th>QUANTIDADE</th><th>FORNECEDOR</th><th>CATEGORIA</th><th>DESCRIÇÃO</th><th>AÇÃO</th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            <% produtos.forEach(produto=>{ %>
-                                <tr>
-                                    <td><%=produto.id%></td>
-                                    <td><%=produto.nomeProd%></td>
-                                    <td><%=produto.preco%></td>
-                                    <td><%=produto.quantidade%></td>
-                                    <td><%=produto.fornecedor%></td>
-                                    <td><%=produto.categoria%></td>
-                                    <td><%=produto.descricao%></td>
-                                    <td style="display: flex;gap: 5px; border: none;">
-                                        <a href="/editarProd/<%= produto.id %>"><button class="btnEditar">Editar</button></a>
-                                        <a href="/deletarProd/<%= produto.id %>"><button class="btnApagar">Apagar</button></a>
-                                    </td>
-                                </tr>
-                            <% }) %>
-                        </tbody>
-                    </table>
-                </div>
             </section>
+
+            
         </main>
+    </div>
+    <div id="listaProd">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>PRODUTO</th>
+                    <th>PREÇO</th>
+                    <th>QTD</th>
+                    <th>FORNECEDOR</th>
+                    <th>CATEGORIA</th>
+                    <th>DESCRIÇÃO</th>
+                    <th>AÇÃO</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <% produtos.forEach(produto=>{ %>
+                    <tr>
+                        <td><%=produto.id%></td>
+                        <td><%=produto.nomeProd%></td>
+                        <td><%=produto.preco%></td>
+
+                        <%if(produto.quantidade < 1){%>
+                            <td style="color: red;"><%=produto.quantidade%></td>
+                        <%}else{%>
+                            <td><%=produto.quantidade%></td>
+                        <%}%>
+
+                        
+                        <td><%=produto.fornecedor%></td>
+                        <td><%=produto.categoria%></td>
+                        <td style="width: 200px; height: 200px; overflow-y: scroll;"><%=produto.descricao%></td>
+
+                        <td style="display: flex;gap: 5px; border: none;">
+                            <a href="/edicao-produto/<%= produto.id %>"><button class="btnEditar">Editar</button></a>
+                            <form action="/deletarProd/<%= produto.id %>" method="POST" onsubmit="deletarProd(event, this)">
+                                <input type="hidden" name="id" value="<%= produto.id %>">
+                                <button class="btnApagar" type="submit">Apagar</button>
+                            </form>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
     </div>
 </body>
 
 
 
 
+<!--FUNÇÕES DESSA PÁGINA-->
 <script>
     function filtrar(value){
         let formProd = document.getElementById("formProd")
         formProd.submit()
+    }
+
+    function deletarProd(event, form){
+        event.preventDefault()
+        let confirmar = confirm("Deseja deletar esse produto?")
+        if(confirmar){
+            form.submit()
+        }
     }
 </script>
 <%- include('../layouts/footer') %>

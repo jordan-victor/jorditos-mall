@@ -42,8 +42,9 @@ produtoController.post('/cadastrarProd', (req, res)=>{
 
 
 //DELETANDO PRODUTOS CADASTRADOS
-produtoController.get('/deletarProd/:id?', (req, res)=>{
-    let id = req.params.id
+produtoController.post('/deletarProd/:id?', (req, res)=>{
+    /*let id = req.params.id*/
+    let id = req.body.id
     Produto.destroy({where:{id:id}}).then(()=>{
         res.redirect('/cadastro-produto')
     })
@@ -88,5 +89,39 @@ produtoController.post('/pesquisarProd',(req, res)=>{
     }
 })
 
+
+//EXIBINDO VIEW DE EDIÇÃO DE PRODUTO E EDIÇÃO DO PRODUTO
+produtoController.get('/edicao-produto/:id?', (req, res)=>{
+    let id = req.params.id 
+    
+    if(id != undefined){
+        Produto.findByPk(id).then(produto=>{
+            res.render('./produtos/edicaoProduto',{produto:produto})
+        })
+    }else{
+        res.redirect('/cadastro-produto')
+    } 
+})
+
+
+produtoController.post('/atualizarProd',(req, res)=>{
+    let id = req.body.id
+    let nome = req.body.nomeProd
+    let preco = req.body.preco
+    let fornecedor = req.body.fornecedor
+    let categoria = req.body.categoria
+    let descricao = req.body.descricao
+
+    Produto.update({
+        nomeProd:nome,
+        preco:preco,
+        fornecedor:fornecedor,
+        categoria:categoria,
+        descricao:descricao
+        },
+        {where:{id:id}
+    })
+    .then(res.redirect(`/edicao-produto/${id}`))
+})
 
 module.exports = produtoController

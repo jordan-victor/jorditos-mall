@@ -44,7 +44,7 @@ form div{
     gap: 5px;
 }
 form button{
-    width: 120px;
+    max-width: 200px;
     padding: 10px;
     text-align: center;
     background-color: rgb(182, 0, 182);

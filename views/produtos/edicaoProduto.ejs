@@ -1,0 +1,75 @@
+<body id="produtos">
+    <%- include('../layouts/header') %>
+    <%- include('../layouts/navbar') %>
+    <div class="container">   
+        <main>
+            <section id="cadastro">
+                <form action="/atualizarProd" method="POST" id="formCadProd">
+                    <div>
+                        <p><strong>EDIÇÃO DO PRODUTO</strong></p>
+                        <hr><br>
+                        <div class="formSeparador">
+                            <label for="nome">
+                                <p>Produto</p>
+                                <input type="text" name="nomeProd" id="nome" placeholder="Nome" value="<%= produto.nomeProd %>" required>
+                            </label>
+                           
+                            <label for="preco">
+                                <p>Preço</p>
+                                <input type="number" name="preco" id="preco" placeholder="Preço" step="0.01" value="<%= produto.preco %>" required>
+                            </label> 
+                        </div>
+
+
+                        <div class="formSeparador">
+                            <label for="fornecedor">
+                                <p>Fornecedor</p>
+                                <input type="text" name="fornecedor" id="fornecedor" placeholder="Fornecedor"  value="<%= produto.fornecedor %>" required>
+                            </label>
+                    
+                            <label for="quantidade">
+                                <% if(produto.quantidade < 1){ %>
+                                    <p style="color: red;">QTD (Reabastecer)</p>
+                                <%}else{ %>
+                                    <p>QTD (apenas leitura)</p>
+                                <%}%>
+                                <input type="number" name="quantidade" id="quantidade" placeholder="Quantidade" value="<%= produto.quantidade %>" readonly>
+                            </label>
+                        </div>
+
+
+                        <div class="formSeparador">
+                            <label for="categoria">
+                                <p>Categoria</p>
+                                <select name="categoria" id="catedoria">
+                                    <option selected><%= produto.categoria %></option>
+                                    <option value="Varejo">Varejo</option>
+                                    <option value="Informática">Informática</option>
+                                    <option value="Eletrodoméstico">Eletrodoméstico</option>
+                                    <option value="Alimentos">Alimentos</option>
+                                    <option value="Móveis">Móveis</option>
+                                    <option value="Eletrônico">Eletrônico</option>
+                                    <option value="Game">Game</option>
+                                </select>
+                            </label>
+
+                            <label for="idProd">
+                                <p>ID (apenas leitura)</p>
+                                <input type="text" name="id" id="id" placeholder="ID"  value="<%= produto.id %>" readonly>
+                            </label>
+                        </div>
+
+
+                        <label for="descricao">
+                            <p>Descrição</p>
+                        </label>
+                        <textarea name="descricao" id="descricao" placeholder="Descrição" required><%= produto.descricao %></textarea>
+
+                        <button type="submit">ATUALIZAR PRODUTO</button>
+                    </div>   
+                </form>
+            </section>
+        </main>
+    </div>
+</body>
+<%- include('../layouts/footer') %>

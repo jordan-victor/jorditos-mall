@@ -4,7 +4,6 @@
     justify-content: center;
     align-items: center;
     gap: 5px;
-    width: 400px;
     margin: 0 auto;
     margin-top: 20px;
     padding: 35px;
@@ -54,4 +53,11 @@
 #listaProd{
     width: 100%;
     overflow-x: scroll;
+}
+
+.formSeparador{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-bottom: 10px;
 }
