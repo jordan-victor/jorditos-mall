@@ -110,6 +110,7 @@ produtoController.post('/atualizarProd',(req, res)=>{
     let preco = req.body.preco
     let fornecedor = req.body.fornecedor
     let categoria = req.body.categoria
+    let quantidade = req.body.quantidade
     let descricao = req.body.descricao
 
     Produto.update({
@@ -121,7 +122,12 @@ produtoController.post('/atualizarProd',(req, res)=>{
         },
         {where:{id:id}
     })
-    .then(res.redirect(`/edicao-produto/${id}`))
+    .then(async()=>{
+        Produto.findByPk(id).then(produto=>{
+            res.render('./produtos/edicaoProduto',{produto:produto})
+        })
+           
+    })
 })
 
 module.exports = produtoController
