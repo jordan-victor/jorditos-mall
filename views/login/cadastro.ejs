@@ -1,0 +1,23 @@
+<%- include('../layouts/header') %>
+<%- include('../layouts/navbar') %>
+<body id="cadastroUsuario">
+    <main>
+        
+        <form action="/createUser" method="POST">
+            <p><strong>CADASTRO DO USUÁRIO</strong></p>
+            <div>
+                <input type="text" name="user" id="user" placeholder="Nome de usuário">
+                <input type="password" name="password" id="password" placeholder="Senha">
+                <input type="email" name="email" id="email" placeholder="Email">
+            </div>
+            <div><button type="submit">CADASTRAR</button></div>
+            <br>
+            <div>
+                <nav>
+                    <a href="/showLogin">Login</a>
+                </nav>
+            </div>
+        </form>
+    </main>
+</body>
+<%- include('../layouts/footer') %>

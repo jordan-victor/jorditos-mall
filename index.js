@@ -26,7 +26,7 @@ const Cliente = connection.Cliente
 const produtoController = require('./controllers/produtoController')
 app.use('/', produtoController)
 
-const userController = require('./controllers/produtoController')
+const userController = require('./controllers/userController')
 app.use('/', userController)
 
 

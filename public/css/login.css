@@ -1,0 +1,17 @@
+#cadastroUsuario form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    margin: 0 auto;
+    margin-top: 20px;
+    padding: 35px;
+    border-radius: 20px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.108);
+    background-image: linear-gradient(-45deg, rgb(235, 248, 255), rgb(255, 235, 255), rgb(253, 255, 232));
+}
+
+#cadastroUsuario form div{
+    width: 100%;
+}
