@@ -4,6 +4,14 @@ const connection = new Sequelize('node_estudo', 'root', 'jordan18', {
     dialect:'mysql'
 })
 
+//TABELA USUÁRIOS
+const User = connection.define('usuarios',{
+    usuario:{type:Sequelize.STRING,allowNull:false},
+    senha:{type:Sequelize.STRING,allowNull:false},
+    email:{type:Sequelize.STRING, allowNull:false}
+})
+User.sync({force:false})
+
 //TABELA CLIENTES
 const Cliente = connection.define('clientes',{
     nome:{type:Sequelize.STRING, allowNull:false},
@@ -26,4 +34,4 @@ const Produto = connection.define('produtos',{
 })
 Produto.sync({force:false})
 
-module.exports = {connection, Cliente, Produto}
+module.exports = {User, connection, Cliente, Produto}
