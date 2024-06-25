@@ -6,15 +6,27 @@ const { raw } = require('body-parser')
 const { where } = require('sequelize')
 const Produto = connection.Produto
 
+//IMPORTANDO MIDDLEWARE DE AUTENTICAÇÃO DO USUÁRIO
+//const userAuth = require('../middlewares/userAuth')
+const userController = require('./userController')
+produtoController.use('/', userController)
+
+
 
 
 
 //LISTANDO OS PRODUTOS
-produtoController.get('/cadastro-produto', (req, res)=>{
+produtoController.get('/cadastro-produto',(req, res)=>{
     Produto.findAll({raw:true, order:[['id', 'DESC']]}).then(produtos=>{
-        res.render('./produtos/cadastroProduto',{
-            produtos:produtos
-        })
+        if(req.session.user != undefined){
+            res.render('./produtos/cadastroProduto',{
+                produtos:produtos
+            })   
+        }
+        else{
+            req.session.message = "Necessário fazer login para acessar esse módulo"
+            res.render('./index', {message: req.session.message})
+        }
     })  
 })
 

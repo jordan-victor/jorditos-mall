@@ -10,39 +10,18 @@ const { raw } = require('body-parser')
 const session = require('express-session')
 userController.use(session({
     secret:"xyzzxy1020304050",
-    cookie:{maxAge:60000}
+    cookie:{maxAge:60000000}
 }))
 
-userController.get('/session',  (req, res)=>{
-    req.session.nome = "Jordan"
-    req.session.email = "jordao@gmail.com"
-    res.send('Sessão criada')
-})
-
-userController.get('/ler', (req, res)=>{
-    res.json({
-        nome:req.session.nome,
-        email: req.session.email
-    })
-})
 
 
-userController.get('/session', (req, res)=>{
-
-})
+//IMPORTANDO O MIDDLEWARE DE AUTENTICAÇÃO DO USUÁRIO
+//const userAuth = require('../middlewares/userAuth')
 
 
 
 
-
-userController.get('/Showlogin',(req,res)=>{
-    res.render('./login/login')
-})
-
-
-
-
-
+//ROTAS DE CRIAÇÃO DE USUÁRIO
 userController.get('/showCadastro',(req,res)=>{
     res.render('./login/cadastro')
 })
@@ -74,5 +53,48 @@ userController.post("/createUser", (req, res)=>{
     })
 })
 
+
+
+
+
+//ROTAS DE AUTENTICAÇÃO/LOGIN DO USUÁRIO
+userController.get('/Showlogin',(req,res)=>{
+    res.render('./login/login')
+})
+
+userController.post('/authenticate', (req, res)=>{
+    let user = req.body.user
+    let password = req.body.password
+    
+    User.findOne({where:{usuario:user}}).then(user=>{
+        if(user != undefined){
+            let correct = bcrypt.compareSync(password, user.senha)
+            if(correct){
+                req.session.user = {
+                    usuario: user.usuario,
+                    email: user.email
+                }
+                res.redirect('/')
+            }
+            else{
+                res.redirect('/Showlogin')
+            }
+        }
+        else{
+            res.redirect('/Showlogin')
+        }
+    })
+})
+
+/*
+userController.get('/teste', (req, res)=>{ 
+    if(req.session.user != undefined){
+        res.send('funciona')    
+    }
+    else{
+        res.redirect('/')
+    }
+})
+*/
 
 module.exports = userController
