@@ -1,6 +1,10 @@
 <%- include('layouts/header') %>
 <body id="home">
 <%- include('layouts/navbar') %>
+    <p id="flashMessage" style="background-color: rgb(255, 206, 206); padding: 15px; width: 100%; text-align: center; color: rgb(197, 76, 76); display: flex; align-items: center; justify-content: center;">
+        <%= message %>   <span onclick="closeMessage()" style="margin-left: 5px; cursor: pointer;"><i class="fa-solid fa-xmark" style="font-size: 20px;"></i></span>
+    </p>
+    
     <main>
         <section>
             <div class="cards">
@@ -24,4 +28,14 @@
         </section>
     </main>
 </body>
+
+
+
+
+<script>
+    function closeMessage(){
+        let message = document.getElementById("flashMessage")
+        message.style.display = 'none'
+    }
+</script>
 <%- include('layouts/footer') %>

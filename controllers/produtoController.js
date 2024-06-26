@@ -10,13 +10,15 @@ const Produto = connection.Produto
 //const userAuth = require('../middlewares/userAuth')
 const userController = require('./userController')
 produtoController.use('/', userController)
+//const userAuth = require('./userController')
+//const user = userAuth.userAuth
 
 
 
 
 
 //LISTANDO OS PRODUTOS
-produtoController.get('/cadastro-produto',(req, res)=>{
+produtoController.get('/cadastro-produto', (req, res)=>{
     Produto.findAll({raw:true, order:[['id', 'DESC']]}).then(produtos=>{
         if(req.session.user != undefined){
             res.render('./produtos/cadastroProduto',{
@@ -24,7 +26,7 @@ produtoController.get('/cadastro-produto',(req, res)=>{
             })   
         }
         else{
-            req.session.message = "Necessário fazer login para acessar esse módulo"
+            req.session.message = "Necessário fazer login para acessar módulos de administrador"
             res.render('./index', {message: req.session.message})
         }
     })  

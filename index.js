@@ -34,7 +34,8 @@ app.use('/', userController)
 
 
 app.get('/',(req, res)=>{
-    res.render('index')
+    req.session.message = null
+    res.render('index', {message:req.session.message})
 })
 
 
